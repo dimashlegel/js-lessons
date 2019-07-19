@@ -1,36 +1,29 @@
 'use strict'
 
 let inp = document.getElementById('inp');
+let par = document.getElementById('par');
+console.log(par.innerHTML);
 
-// inp.addEventListener('blur', getSum);
+inp.addEventListener('blur', getValue);
 
-// function getSum() {
+function longestWord(str) {
+	
+	let arrWord = str.split(' ');
+	let wordL = [];
+	let rez;
 
-// 	let str = inp.value.split(' ');
-// 	let newArr = [];
-// 	for (let i = 0; i < str.length; i++) {
-// 		const element = str[i];
-// 		let newStr = element.replace(element.charAt(0), element.charAt(0).toUpperCase());
-// 		newArr.push(newStr);
-// 	}
-// 	inp.value = newArr.join(' ');
-// }
-
-// var 2
-
-inp.addEventListener('blur', bigLetter);
-
-function uswords(str) {
-	var arr = str.split(' ');
-	for (var i = 0; i < arr.length; i++) {
-		arr[i] = arr[i].split('');
-		arr[i][0] = arr[i][0].toUpperCase();
-		arr[i] = arr[i].join('');
+	for (let i = 0; i < arrWord.length; i++) {
+		const word = arrWord[i];
+		wordL.push(word.length);
 	}
-	str = arr.join(' ');
-	return str;
+	rez = getMaxOfArray(wordL);
+	return rez;
 }
 
-function bigLetter() {
-	inp.value = uswords(inp.value);
-}  
+function getValue() {
+	par.innerHTML = longestWord(inp.value);
+}
+
+function getMaxOfArray(numArray) {
+	return Math.max.apply(null, numArray);
+}
