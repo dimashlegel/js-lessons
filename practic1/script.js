@@ -1,17 +1,16 @@
 'use strict'
-let btn = document.getElementById('btn');
-let rez = document.getElementById('rez');
-let sum = 0;
 
-btn.addEventListener('click', getSum);
+let inp = document.getElementById('inp');
+
+inp.addEventListener('blur', getSum);
 
 function getSum() {
-	sum = 0
-	let inputs = document.getElementsByClassName('inp');
-	for (let i = 0; i < inputs.length; i++) {
-		const element = inputs[i];
-		let value = Number(element.value);
-		sum += value;
+	let str = inp.value.split('');
+	let rez = 0;
+	for (let i = 0; i < str.length; i++) {
+		const element = str[i];
+		rez += Number(element);
 	}
-	rez.value = sum;
+	console.log(rez);
+	
 }
