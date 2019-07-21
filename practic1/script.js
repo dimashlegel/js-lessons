@@ -2,29 +2,22 @@
 
 let inp = document.getElementById('inp');
 
-inp.addEventListener('blur', checkWordIsPalindrom);
+inp.addEventListener('blur', checkOnNumber);
 
-function checkWordIsPalindrom() {
-	// var 1
+function checkOnNumber(num) {
 
 	let str = inp.value;
-	let arr = str.split('');
-	let arr2 = arr.reverse();
-	let str2 = arr2.join('');
-	if (str === str2) {
-		console.log(true);
-	} else {
-		console.log(false);
-	}
+	// var 1
+	// return str.includes(num);
 
-	// var 2
-	// var arr2 = str.split('').reverse();
-	// for (var i = 0; i < arr.length; i++) {
-	// 	if (arr[i] !== arr2[i]) {
-	// 		alert('это слово не палиндром');
-	// 		return;
-	// 	}
-	// }
-	// alert('это слово палиндром');
-	// return;
+	// var 2 
+	let array = str.split('');
+	for (let i = 0; i < array.length; i++) {
+		const element = array[i];
+		if (Number(element) === Number(num)) {
+			return true
+		}
+	}
 }
+
+console.log(checkOnNumber(3));
