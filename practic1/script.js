@@ -2,16 +2,29 @@
 
 let inp = document.getElementById('inp');
 
-inp.addEventListener('blur', getYear);
+inp.addEventListener('blur', checkWordIsPalindrom);
 
-function getYear() {
-	let weak = ['Ned', 'Pon', 'Viv', 'Ser', 'Chet', 'Piat', 'Sub'];
+function checkWordIsPalindrom() {
+	// var 1
+
 	let str = inp.value;
-	let arr = str.split('.');
-	let arr1 = arr.reverse();
-	var str1 = arr1.join(',');
-	let date = new Date(str1);
-	console.log(date);
-	let currentDay = date.getDay();
-	console.log(weak[currentDay]);
+	let arr = str.split('');
+	let arr2 = arr.reverse();
+	let str2 = arr2.join('');
+	if (str === str2) {
+		console.log(true);
+	} else {
+		console.log(false);
+	}
+
+	// var 2
+	// var arr2 = str.split('').reverse();
+	// for (var i = 0; i < arr.length; i++) {
+	// 	if (arr[i] !== arr2[i]) {
+	// 		alert('это слово не палиндром');
+	// 		return;
+	// 	}
+	// }
+	// alert('это слово палиндром');
+	// return;
 }
