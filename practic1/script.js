@@ -2,13 +2,11 @@
 
 let inp = document.getElementById('inp');
 
-inp.addEventListener('blur', transformData);
+inp.addEventListener('blur', getYear);
 
-function transformData() {
-	let str = inp.value;
-	let arr = str.split('.');
-
-	let arr2 = arr.reverse();
-	let newStr = arr2.join('-');
-	inp.value = newStr;
+function getYear() {
+	let date = new Date();
+	let currentY = date.getFullYear();
+	let rez = currentY - Number(inp.value);
+	console.log(rez);
 }
