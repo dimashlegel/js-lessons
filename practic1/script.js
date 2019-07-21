@@ -1,23 +1,30 @@
 'use strict'
 
+let btn = document.getElementById('btn');
 let inp = document.getElementById('inp');
+let arr = document.getElementsByTagName('p');
 
-inp.addEventListener('blur', checkOnNumber);
+btn.addEventListener('click', checkOnNumber);
 
-function checkOnNumber(num) {
+function checkOnNumber() {
+	let arr2 = [];
 
-	let str = inp.value;
-	// var 1
-	// return str.includes(num);
-
-	// var 2 
-	let array = str.split('');
-	for (let i = 0; i < array.length; i++) {
-		const element = array[i];
-		if (Number(element) === Number(num)) {
-			return true
-		}
+	for (let i = 0; i < arr.length; i++) {
+		const element = arr[i];
+		arr2[i] = +element.innerHTML;
 	}
+
+	inp.value = arr2.sort(sortArr);
 }
 
-console.log(checkOnNumber(3));
+function sortArr(a, b) {
+	if (a > b) {
+		return 1;
+	}
+	if (a < b) {
+		return -1;
+	}
+	if (a == b) {
+		return 0;
+	}
+}
