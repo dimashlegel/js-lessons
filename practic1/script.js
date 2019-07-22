@@ -1,30 +1,22 @@
 'use strict'
 
-let btn = document.getElementById('btn');
-let inp = document.getElementById('inp');
-let arr = document.getElementsByTagName('p');
+let arr = document.getElementsByTagName('a');
 
-btn.addEventListener('click', checkOnNumber);
+window.addEventListener('DOMContentLoaded', addHref);
 
-function checkOnNumber() {
-	let arr2 = [];
-
+function addHref() {
 	for (let i = 0; i < arr.length; i++) {
 		const element = arr[i];
-		arr2[i] = +element.innerHTML;
-	}
+		// var 1
 
-	inp.value = arr2.sort(sortArr);
-}
+		// if (element.getAttribute('href').includes('http://')) {
+		// 	element.innerHTML += element.getAttribute('href');
+		// }
+		
+		// var 2
 
-function sortArr(a, b) {
-	if (a > b) {
-		return 1;
-	}
-	if (a < b) {
-		return -1;
-	}
-	if (a == b) {
-		return 0;
+		if (element.getAttribute('href').indexOf('http://') == 0) {
+			element.innerHTML += element.getAttribute('href');
+		}
 	}
 }
