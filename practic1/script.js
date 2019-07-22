@@ -1,32 +1,25 @@
 'use strict'
 
-let img = document.getElementById('img');
+let inp = document.getElementById('inp');
+let plus = document.getElementById('plus');
+let minus = document.getElementById('minus');
 
-// var 1
+plus.addEventListener('click', increase);
+minus.addEventListener('click', decrease);
 
-// img.addEventListener('click', zoomImg);
-// let counter = 0;
-// function zoomImg() {
-// 	counter += 1;
-// 	if (counter % 2 == 0) {
-// 		this.width = this.width / 2;
-// 		return;
-// 	}
-// 	this.width *= 2;
-// }
+function increase() {
+	let val = Number(inp.value);
+	val += 1;
+	inp.value = val;
+	minus.disabled = false;
 
-// var 2
-
-img.addEventListener('click', zoomInImg);
-
-function zoomInImg() {
-	this.height *= 2;
-	this.removeEventListener('click', zoomInImg);
-	this.addEventListener('click', zoomOutImg);
 }
 
-function zoomOutImg() {
-	this.height /= 2;
-	this.removeEventListener('click', zoomOutImg);
-	this.addEventListener('click', zoomInImg);
+function decrease() {
+	if (inp.value == 0) {
+		minus.disabled = true;
+	} else {
+		minus.disabled = false;
+		inp.value -= 1;
+	}
 }
