@@ -1,25 +1,19 @@
 'use strict'
 
-let btn = document.querySelector('#btn');
-let arr = document.getElementsByTagName('p');
-let arr2 = [];
+let inp = document.querySelector('#inp');
+let inpNum = document.querySelector('#inpNum');
+let inpSymb = document.querySelector('#inpSymb');
 
-for (let i = 0; i < arr.length; i++) {
-	const element = arr[i];
-	arr2.push(element.innerHTML);
-}
+let button = document.querySelector('button');
 
-btn.addEventListener('click', findMax);
+button.addEventListener('click', createString);
 
-function findMax() {
-	let max = arr2.reduce(function(a, b, index) {
-		return Math.max(a, b);
-	});
-
-	for (let i = 0; i < arr.length; i++) {
-		const element = arr[i];
-		if (+element.innerHTML == max) {
-			element.style.color = 'red';
-		}
+function createString() {
+	let str = '';
+	let symbols = inpSymb.value;
+	for (let i = 0; i < inpNum.value; i++) {
+		let symbol = symbols.charAt(Math.floor(Math.random() * symbols.length));
+		str += symbol;
 	}
+	inp.value = str;
 }
