@@ -1,10 +1,25 @@
 'use strict'
 
-let inp = document.querySelector('input');
-let par = document.querySelector('p');
+let btn = document.querySelector('#btn');
+let arr = document.getElementsByTagName('p');
+let arr2 = [];
 
-document.documentElement.addEventListener('mouseup', func);
+for (let i = 0; i < arr.length; i++) {
+	const element = arr[i];
+	arr2.push(element.innerHTML);
+}
 
-function func(event) {
-	inp.value = window.getSelection().toString();
+btn.addEventListener('click', findMax);
+
+function findMax() {
+	let max = arr2.reduce(function(a, b, index) {
+		return Math.max(a, b);
+	});
+
+	for (let i = 0; i < arr.length; i++) {
+		const element = arr[i];
+		if (+element.innerHTML == max) {
+			element.style.color = 'red';
+		}
+	}
 }
