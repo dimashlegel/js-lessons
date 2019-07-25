@@ -1,12 +1,20 @@
 'use strict'
-let divs = document.getElementsByTagName('div');
+let tds = document.getElementsByTagName('td');
+let btn = document.querySelector('button');
 
-for (let i = 0; i < divs.length; i++) {
-	const element = divs[i];
-	let str = element.innerHTML;
-	// var 1
-	let newStr = str.substr(0, 10) + '...';
-	// var 2
-	// let newStr = element.innerHTML.slice(0, 10)+'...';
-	element.innerHTML = newStr;
+btn.addEventListener('click', func);
+
+function func() {
+	let val = 0;
+	let current;
+	for (let i = 0; i < tds.length; i++) {
+		const element = tds[i];
+		if (val >= Number(element.innerHTML)) {
+			val = val;
+		} else {
+			val = Number(element.innerHTML);
+			current = i;
+		}
+	}
+	tds[current].style.border = '1px solid red';
 }
