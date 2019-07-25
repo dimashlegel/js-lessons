@@ -1,19 +1,17 @@
 'use strict'
 
-let p = document.querySelector('p');
-let inputs = document.querySelectorAll('input[type="checkbox"]');
+let input = document.getElementById('input');
+let btn = document.getElementById('button');
+let list = document.getElementById('ul');
 
-for (let i = 0; i < inputs.length; i++) {
-	const element = inputs[i];
-	element.addEventListener('change', func);
-}
+btn.addEventListener('click', func);
 
 function func() {
-	if (this.checked) {
-		p.style.cssText += this.value;
-	} else {
-		let prop = this.value;
-		let propName = prop.split(':');
-		p.style.removeProperty(propName[0]);
+	let arr = input.value.split(',');
+	for (let i = 0; i < arr.length; i++) {
+		const element = arr[i];
+		let li = document.createElement('li');
+		li.innerHTML = element;
+		list.appendChild(li);
 	}
 }
