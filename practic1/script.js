@@ -4,14 +4,13 @@ let input = document.getElementById('input');
 let btn = document.getElementById('button');
 let list = document.getElementById('ul');
 
-btn.addEventListener('click', func);
+input.addEventListener('keypress', func);
 
-function func() {
-	let arr = input.value.split(',');
-	for (let i = 0; i < arr.length; i++) {
-		const element = arr[i];
+function func(event) {
+	if (event.keyCode == 13) {
 		let li = document.createElement('li');
-		li.innerHTML = element;
+		li.innerHTML = input.value;
 		list.appendChild(li);
+		input.value = '';
 	}
 }
