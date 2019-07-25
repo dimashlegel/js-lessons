@@ -1,15 +1,18 @@
 'use strict'
 
-let par = document.querySelector('#par');
-let arr = ['red', 'green', 'blue'];
-let count = 0;
-// par.style.color = arr[0];
-window.setInterval(changeColor, 1000);
+let inputs = document.querySelectorAll('input');
+let counter = 1;
+let i = 0;
 
-function changeColor() {
-	par.style.color = arr[count];
-	count++;
-	if (count == arr.length) {
-		count = 0;
+window.setInterval(newValue, 1000);
+
+function newValue() {
+	// console.log(i);
+	inputs[i].value = counter;
+	i++;
+	counter++;
+	if (i == inputs.length) {
+		i = 0;
 	}
 }
+
