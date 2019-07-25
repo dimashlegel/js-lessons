@@ -1,16 +1,12 @@
 'use strict'
+let divs = document.getElementsByTagName('div');
 
-let input = document.getElementById('input');
-let btn = document.getElementById('button');
-let list = document.getElementById('ul');
-
-input.addEventListener('keypress', func);
-
-function func(event) {
-	if (event.keyCode == 13) {
-		let li = document.createElement('li');
-		li.innerHTML = input.value;
-		list.appendChild(li);
-		input.value = '';
-	}
+for (let i = 0; i < divs.length; i++) {
+	const element = divs[i];
+	let str = element.innerHTML;
+	// var 1
+	let newStr = str.substr(0, 10) + '...';
+	// var 2
+	// let newStr = element.innerHTML.slice(0, 10)+'...';
+	element.innerHTML = newStr;
 }
