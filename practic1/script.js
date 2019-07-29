@@ -1,20 +1,29 @@
 'use strict'
 let tds = document.getElementsByTagName('td');
 let btn = document.querySelector('button');
+let inp = document.querySelector('input');
 
 btn.addEventListener('click', func);
 
 function func() {
-	let val = 0;
-	let current;
+	let arr = [];
 	for (let i = 0; i < tds.length; i++) {
-		const element = tds[i];
-		if (val >= Number(element.innerHTML)) {
-			val = val;
-		} else {
-			val = Number(element.innerHTML);
-			current = i;
-		}
+		arr.push(Number(tds[i].innerHTML));
 	}
-	tds[current].style.border = '1px solid red';
+
+	arr.sort(sortFunc);
+	let str = arr.join(',');
+	inp.value += str;
+}
+
+function sortFunc(b, a) {
+	if (a < b) {
+		return 1;
+	}
+	if (a > b) {
+		return -1;
+	}
+	if (a == b) {
+		return 0;
+	}
 }
