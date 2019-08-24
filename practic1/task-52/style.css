@@ -1,9 +1,5 @@
 td {
-	width: 20px;
+	width: 100px;
 	height: 20px;
 	border: 1px solid #000;
-}
-
-td.active {
-	border: 1px solid red;
 }
