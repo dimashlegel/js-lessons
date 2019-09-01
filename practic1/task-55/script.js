@@ -1,31 +1,52 @@
-'use strict'
+// 'use strict'
 
-var cityArr = {
-	'aus': ['Мельбурн', 'Сидней', 'Аделаида', 'Брисбен', 'Хобарт'],
-	'jap': ['Токио', 'Киото', 'Осака', 'Иокогама'],
-	'sar': ['Кейптаун', 'Йоханесбург'],
- }
 
-var prime_select = document.getElementById('country');
-prime_select.addEventListener('change', func);
-prime_select.addEventListener('change', toParagraph);
+let y;
+let mon;
+let years = document.querySelector('#year');
 
-var city_select = document.getElementById('cities');
-city_select.addEventListener('change', toParagraph);
 
-function func(){
-	city_select.innerHTML = '';
-	var selected_country = prime_select.value;
-	for (var i = 0; i < cityArr[selected_country].length; i++) {
-		var new_option = document.createElement('option');
-		new_option.innerHTML = cityArr[selected_country][i];
-		city_select.appendChild(new_option);
+function Calendar(year, month) {
+	
+	let Dlast = 32 - new Date(year, month, 32).getDate(); // return last day (amount of days) in month
+	let D = new Date(year, month, Dlast); // last day in month (28---31)
+	let m = document.querySelector('option[value="' + month + '"]'); // marked month
+	let option;
+
+	let generate = function(item, id) {
+		for (var i = item; i >= 0; i--) {
+			option = document.createElement('option');
+			option.textContent = i;			
+			id.appendChild(option);
+		}
+	}
+	
+	date.innerHTML = '';
+	generate(Dlast, date);
+	m.selected = true;
+	y = years;
+	mon = m;
+	if (document.querySelector('#year').length == 0) {
+		generate(D.getFullYear(), y);
 	}
 }
 
-var parag = document.querySelector('p');
-function toParagraph() {
-	parag.innerHTML = '';
-	parag.innerHTML = prime_select.options[prime_select.selectedIndex].text + ','
-	+city_select.options[city_select.selectedIndex].text;
- }
+Calendar(new Date().getFullYear(), new Date().getMonth());
+
+calendar.addEventListener('change', function(event) {
+	let target = event.target;
+	while (target != calendar) {
+		if (target.tagName == 'SELECT') {
+			switch (target.getAttribute('id')) {
+				case ('month'):
+					Calendar(year.value, target.value)
+					break;
+				case ('year'):
+					Calendar(target.value, mon.value);
+					break;
+			}
+			return;
+		}
+		target = target.parentNode;
+	}
+})
