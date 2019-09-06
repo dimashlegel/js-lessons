@@ -2,30 +2,51 @@
 
 let table = document.getElementById('table');
 let result = document.getElementById('result');
-let products = [
-	{name: 'product1', price: 100, quantity: 4},
-	{name: 'product2', price: 200, quantity: 5},
-	{name: 'product2', price: 300, quantity: 6}
-]
+let resultNumb = result.querySelector('span');
+let btn = document.getElementById('btn');
 
-let total = 0;
-for (let i = 0; i < products.length; i++) {
-	const prod = products[i];
-	let tr = document.createElement('tr');
-	for (const key in prod) {
-		if (prod.hasOwnProperty(key)) {
-			const element = prod[key];
-			let td = document.createElement('td');
-			td.innerHTML = element;
-			tr.appendChild(td); 
+let inputs = document.getElementsByTagName('input');
+
+for (let i = 0; i < inputs.length; i++) {
+	const input = inputs[i];
+	// input.addEventListener('input', getValue);
+}
+
+// function getValue() {
+
+// }
+
+btn.addEventListener('click', getProdData);
+
+function getProdData() {
+	let prodData = [];
+	for (let i = 0; i < inputs.length; i++) {
+		if (inputs[i].value.length) {
+			prodData[i] = inputs[i].value;
+		} else {
+			return alert('Feel all inputs');
 		}
 	}
-
-	let sum = prod.price * prod.quantity;
-	let tdSum = document.createElement('td');
-	tdSum.innerHTML = sum;
-	tr.appendChild(tdSum);
-	table.appendChild(tr);
-	total += sum;
+	return addProduct(prodData);
 }
-result.innerHTML += total;
+
+function addProduct(prodArray) {
+	let tr = document.createElement('tr');
+	for (let i = 0; i < prodArray.length; i++) {
+		const element = prodArray[i];
+		let td = document.createElement('td');
+		td.innerHTML = element;
+		tr.appendChild(td);
+	}
+	let sumTd = document.createElement('td');
+	sumTd.innerHTML = prodArray[1] * prodArray[2];
+	tr.appendChild(sumTd);
+	table.appendChild(tr);
+	return getTotal(sumTd.innerHTML);
+}
+
+function getTotal(sum) {
+	let finalResult = parseInt(resultNumb.innerHTML);
+	finalResult += +sum;
+	resultNumb.innerHTML = finalResult;
+}
