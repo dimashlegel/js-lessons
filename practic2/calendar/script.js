@@ -1,12 +1,18 @@
 'use strict'
 
 let calendar = document.getElementById('calendar');
+let display = document.getElementById('display');
+let nextMonth = document.getElementById('nextMonth');
+let prevMonth = document.getElementById('prevMonth');
 
 
 let data = new Date();
+let year = data.getFullYear();
 let month = data.getMonth();
 let weekDay = data.getDay();
 let day = data.getDate();
+
+let monthes = ['Januar', 'Februar', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
 // var optionsMonth = {
 // 	month: 'long',
@@ -32,7 +38,7 @@ function getDays(from, to, parent, child) {
 		let item = document.createElement(child);
 		item.innerHTML = i;
 		markCurrentDay(item);
-		markWeekandDay(item);
+		markWeekandDay(item, i);
 		wrapper.appendChild(item);
 	}
 	return wrapper;
@@ -46,6 +52,43 @@ function markCurrentDay(elem) {
 	}
 }
 
-function markWeekandDay(elem) {
+function markWeekandDay(item, elem) {
+	let weekandDay = new Date(year, month, elem);
+	if (weekandDay.getDay() == 0 || weekandDay.getDay() == 6) {
+		item.style.color = 'red';
+	}
+}
 
+function showCurrentYearMonth(currYear, currMonth) {
+	return currYear + ' ' + monthes[currMonth];
+}
+
+display.innerHTML = showCurrentYearMonth(year, month);
+
+let monthIndex = month; // counter;
+let yearIndex = year; // counter;
+nextMonth.addEventListener('click', function() {
+	if (monthIndex >= 11) {
+		monthIndex = 0;
+		yearIndex += 1;
+		showNextPrevYearMonth(yearIndex, monthIndex);
+	} else {
+		monthIndex += 1;
+		showNextPrevYearMonth(yearIndex, monthIndex);
+	}
+});
+
+prevMonth.addEventListener('click', function() {
+	if (monthIndex <= 0) {
+		monthIndex = 11;
+		yearIndex -= 1;
+		showNextPrevYearMonth(yearIndex, monthIndex);
+	} else {
+		monthIndex -= 1;
+		showNextPrevYearMonth(yearIndex, monthIndex);
+	}
+});
+
+function showNextPrevYearMonth(currentYear, currentMonth) {
+	display.innerHTML = showCurrentYearMonth(currentYear, currentMonth);
 }

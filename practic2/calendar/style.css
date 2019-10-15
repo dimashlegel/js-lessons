@@ -1,0 +1,6 @@
+#calendar {}
+#calendar ul {}
+#calendar ul li {
+	display: inline-block;
+	margin: 5px;
+}
