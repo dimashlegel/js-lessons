@@ -1,10 +1,18 @@
-#calendar {}
-#calendar ul {
+#calendar {
+	max-width: 450px;
 	display: inline-block;
 	margin: 0;
 	padding: 0;
 }
-#calendar ul li {
+#calendar li {
 	display: inline-block;
 	margin: 5px;
+	border: 1px solid #000;
+	width: 40px;
+	height: 40px;
+	text-align: center;
+	padding: 3px;
+}
+#calendar li.not-active {
+background-color: silver;
 }

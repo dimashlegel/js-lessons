@@ -14,10 +14,13 @@ let day = data.getDate();
 let monthes = ['Januar', 'Februar', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 let week = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-let monthIndex = month; // counter;
+let monthIndex = month; // counter for month;
 let monthBefore = monthIndex - 1;
 let monthAfter = monthIndex + 1;
-let yearIndex = year; // counter;
+
+let yearIndex = year; // counter for year;
+let prevYear; // = getYearForPrevMonth(yearIndex, monthIndex, monthBefore);
+let nextYear; // = getYearForNextMonth(yearIndex, monthIndex, monthAfter);
 
 function getlastDayOfMonth(data, monthIndex) {
 	let lastDayOfMonth = new Date(yearIndex, monthIndex + 1, 0);
@@ -26,57 +29,54 @@ function getlastDayOfMonth(data, monthIndex) {
 }
 // console.log(getlastDayOfMonth(data, 9)); // show last day of month;
 
-function getDays(from, to, parent, child, currentMonth) { // get all days in month
-	// console.log(currentMonth);
-
-	let wrapper = document.createElement(parent);
-	for (let i = from; i <= to; i++) {
-		let item = document.createElement(child);		
-		let dayOfWeek = getDayOfWeek(yearIndex, currentMonth, i);
-		item.innerHTML = i + '<br/><span>' + dayOfWeek + '</span>';
-		markWeekandDay(item, i, currentMonth);
-		markCurrentDay(item, currentMonth);
-		wrapper.appendChild(item);
-	}
-	return wrapper;
-}
-
-function createCalendar(month) {
-	calendar.innerHTML = "";
-	return calendar.appendChild(getDays(1, getlastDayOfMonth(data, month), 'ul', 'li', month));
-}
-
-
-function createCalendarBefore(monthBefore, month) {
-	let startDay = getlastDayOfMonth(data, monthBefore) - howManyDaysToMonday(month) + 1;
-	return calendar.prepend(getDays(startDay, getlastDayOfMonth(data, monthBefore), 'ul', 'li', monthBefore));
-}
-
-function createCalendarAfter(monthAfter, month) {
-	// let startDay = getlastDayOfMonth(data, month);
+function getDays(from, to, child, currentMonth, year, className) { // get all days in month
+	// let wrapper = document.createElement(parent);
 	// debugger;
-	return calendar.append(getDays(1, howManyDaysToSunday(month), 'ul', 'li', monthAfter));
+	for (let i = from; i <= to; i++) {
+		let item = document.createElement(child);
+		let dayOfWeek = getDayOfWeek(year, currentMonth, i);
+		item.innerHTML = i + '<br/><span>' + dayOfWeek + '</span>';
+		item.classList.add(className);
+		markWeekandDay(item, i, currentMonth, year);
+		markCurrentDay(item, currentMonth, year);
+		calendar.appendChild(item);
+	}
+	return calendar;
 }
 
+function createCalendar(month, year) {
+	// calendar.innerHTML = "";
+	return getDays(1, getlastDayOfMonth(data, month), 'li', month, year, 'active');
+}
 
-createCalendar(month);
-createCalendarBefore(monthBefore, month);
-createCalendarAfter(monthAfter, month);
-getFirstDayOfCurrMonth(month);
-howManyDaysToMonday(month);
+function createCalendarBefore(monthBefore, month, prevYear) {
+	let startDay = getlastDayOfMonth(data, monthBefore) - howManyDaysToMonday(month) + 1;
+	return getDays(startDay, getlastDayOfMonth(data, monthBefore), 'li', monthBefore, prevYear, 'not-active');
+}
+
+function createCalendarAfter(monthAfter, month, nextYear) {
+	return getDays(1, howManyDaysToSunday(yearIndex, month), 'li', monthAfter, nextYear, 'not-active');
+}
+
+getYearForPrevMonth(yearIndex, monthIndex, monthBefore);
+getYearForNextMonth(yearIndex, monthIndex, monthAfter);
+createCalendarBefore(monthBefore, month, prevYear);
+createCalendar(month, year);
+createCalendarAfter(monthAfter, month, nextYear);
+// getFirstDayOfCurrMonth(month);
+// howManyDaysToMonday(month);
 // howManyDaysToSunday(month);
 
-
-function markCurrentDay(elem, currentMonth) { // show green current day
-	if (+elem.firstChild.textContent == day && month == currentMonth) {
-		elem.style.color = 'green';
+function markCurrentDay(elem, currentMonth, yeari) { // show green current day
+	if (+elem.firstChild.textContent == day && month == currentMonth && yeari == year) {
+		elem.style.background = 'green';
 	}
 }
 
-function markWeekandDay(item, elem, currentMonth) { // show red weekend day
-	let weekandDay = new Date(yearIndex, currentMonth, elem);
+function markWeekandDay(item, elem, currentMonth, year) { // show red weekend day
+	let weekandDay = new Date(year, currentMonth, elem);
 	if (weekandDay.getDay() == 0 || weekandDay.getDay() == 6) {
-		item.style.color = 'red';
+		item.style.background = 'red';
 	}
 }
 
@@ -100,17 +100,20 @@ nextMonth.addEventListener('click', function() {
 		monthBefore = monthIndex - 1;
 		monthAfter = monthIndex + 1;
 	}
-	
-	console.log('month:' , monthIndex);
-	console.log('yaer:' , yearIndex);
-	
+	getYearForPrevMonth(yearIndex, monthIndex, monthBefore);
+	getYearForNextMonth(yearIndex, monthIndex, monthAfter);
 	showNextPrevYearMonth(yearIndex, monthIndex);
-	createCalendar(monthIndex);
-	createCalendarBefore(monthBefore, monthIndex);
-	createCalendarAfter(monthAfter, monthIndex);
-	getFirstDayOfCurrMonth(monthIndex);
+	calendar.innerHTML = '';
+	createCalendarBefore(monthBefore, monthIndex, prevYear);
+	createCalendar(monthIndex, yearIndex);
+	createCalendarAfter(monthAfter, monthIndex, nextYear);
+	// getFirstDayOfCurrMonth(monthIndex);
 	// howManyDaysToMonday(monthIndex);
 });
+
+function increaseMonthIndex(monthIndex) {
+
+}
 
 prevMonth.addEventListener('click', function() {
 	monthIndex -= 1;
@@ -126,11 +129,14 @@ prevMonth.addEventListener('click', function() {
 		monthBefore = monthIndex - 1;
 		monthAfter = monthIndex + 1;
 	}
+	getYearForPrevMonth(yearIndex, monthIndex, monthBefore);
+	getYearForNextMonth(yearIndex, monthIndex, monthAfter);
 	showNextPrevYearMonth(yearIndex, monthIndex);
-	createCalendar(monthIndex);
-	createCalendarBefore(monthBefore, monthIndex);
-	createCalendarAfter(monthAfter, monthIndex);
-	getFirstDayOfCurrMonth(monthIndex);
+	calendar.innerHTML = '';
+	createCalendarBefore(monthBefore, monthIndex, prevYear);
+	createCalendar(monthIndex, yearIndex);
+	createCalendarAfter(monthAfter, monthIndex, nextYear);
+	// getFirstDayOfCurrMonth(monthIndex);
 	// howManyDaysToMonday(monthIndex);
 });
 
@@ -145,7 +151,6 @@ function getFirstDayOfCurrMonth(currentMonth) {
 }
 
 function howManyDaysToMonday(currentMonth) {
-	// console.log(yearIndex);
 	let FirstDayOfMonth = new Date(yearIndex, currentMonth, 1);
 	let firstDay = FirstDayOfMonth.getDay();
 	let dayName = week[firstDay];
@@ -165,22 +170,14 @@ function howManyDaysToMonday(currentMonth) {
 	}
 }
 
-function howManyDaysToSunday(currentMonth) {
-	let lastDayOfMonth = new Date(year, currentMonth + 1, 0);
-	console.log('lastDayOfMonth', lastDayOfMonth);
-	
+function howManyDaysToSunday(currentYear, currentMonth) {
+	let lastDayOfMonth = new Date(currentYear, currentMonth + 1, 0);
 	let lastDay = lastDayOfMonth.getDay();
-	console.log('lastDay', lastDay);
-
 	let dayName = week[lastDay];
-	console.log('dayName init', dayName);
-
 	let counter = 0;
-	console.log('counter', counter);
-
 	for (let i = 0; i < 7; i++) {
 		if (dayName === 'Sun') {
-			console.log('days to Sunday:', counter);
+			// console.log('days to Sunday:', counter);
 			return counter;
 		} else {
 			counter += 1;
@@ -189,22 +186,29 @@ function howManyDaysToSunday(currentMonth) {
 				lastDay = 0;
 			}
 			dayName = week[lastDay];
-			console.log('dayName', dayName);
-			
 		}
 	}
 }
 
-// let week = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-
-
 function getDayOfWeek(currentYear, currentMonth, numberDay) {
 	let dayOfWeek = new Date(currentYear, currentMonth, numberDay);
-	// console.log(dayOfWeek);
-	
-	// console.log('Day of Week: ' + week[dayOfWeek.getDay()]);
-	// debugger;
 	return week[dayOfWeek.getDay()];
+}
+
+function getYearForPrevMonth(yearIndex, monthIndex, monthBefore) {
+	if (monthIndex == 0 && monthBefore == 11) {
+		prevYear = yearIndex - 1;
+	} else {
+		prevYear = yearIndex;
+	}
+}
+
+function getYearForNextMonth(yearIndex, monthIndex, monthAfter) {
+	if (monthIndex == 11 && monthAfter == 0) {
+		nextYear = yearIndex + 1;
+	} else {
+		nextYear = yearIndex;
+	}
 }
 
 // var optionsMonth = {
