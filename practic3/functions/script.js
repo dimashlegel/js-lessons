@@ -67,6 +67,34 @@ arrayRand([1, 2, 3]);
 // 4. Сделайте функцию uniq, которая будет оставлять в массиве только уникальные элементы (то есть будет удалять дубли)
 
 function uniq(arr) {
-
+	// debugger;
+	let result = [];
+	let length = arr.length;
+	for (let i = 0; i < length; i++) {
+		let currentElem = arr.shift();
+		if (arr.indexOf(currentElem) === -1) {
+			result.push(currentElem);
+		}
+	}
+	return result;
 }
-uniq([1, 2, 3, 1, 2]);
+uniq([5, 1, 3, 2, 3, 1, 2, 4, 4]);
+
+//
+//
+//
+//
+// 5. Сделайте функцию shuffle, которая параметром будет принимать массив и перемешивать его элементы в случайном порядке.
+
+function shuffle(arr) {
+	let result = [];
+	let random;
+	while (arr.length > 0) {
+		random = Math.floor(Math.random() * Math.floor(arr.length));
+		result.push(arr[random]);
+		arr.splice(random, 1);
+	}
+	return result;
+}
+
+console.log(shuffle([1, 2, 3, 4, 5]));
