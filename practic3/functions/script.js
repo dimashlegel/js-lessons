@@ -105,74 +105,175 @@ shuffle([1, 2, 3, 4, 5]);
 // 6. Сделайте функцию, которая параметром будет принимать число, а возвращать это же число прописью. Например, число 115 прописью это сто пятнадцать. Пусть функция работает с числами до миллиона.
 
 let numNames = {
-	0: 'ноль',
-	1: 'один',
-	2: 'два',
-	3: 'три',
-	4: 'четыре',
-	5: 'пять',
-	6: 'шесть',
-	7: 'семь',
-	8: 'восемь',
-	9: 'девять',
-	10: 'десять',
-	11: 'одиннадцать',
-	12: 'двенадцать',
-	13: 'тринадцать',
-	14: 'четырнадцать',
-	15: 'пятнадцать',
-	16: 'шестнадцать',
-	17: 'семнадцать',
-	18: 'восемнадцать',
-	19: 'девятнадцать',
-	20: 'двадцать',
-	30: 'тридцать',
-	40: 'сорок',
-	50: 'пятьдесять',
-	60: 'шестдесять',
-	70: 'семдесят',
-	80: 'восемдесят',
-	90: 'девяносто',
-	100: 'сто',
-	200: 'двести',
-	300: 'триста',
-	400: 'четыреста',
-	500: 'пятьсот',
-	600: 'шестьсот',
-	700: 'семьсот',
-	800: 'восемьсот',
-	900: 'девятьсот',
-	1000: 'тысяча',
+	simple: ['ноль', 'один', 'два', 'три', 'четыре', 'пять', 'шесть', 'семь', 'восемь', 'девять'],
+	double: ['десять', 'одиннадцать', 'двенадцать', 'тринадцать', 'четырнадцать', 'пятнадцать', 'шестнадцать', 'семнадцать', 'восемнадцать', 'девятнадцать'],
+	decimal: ['двадцать', 'тридцать', 'сорок', 'пятьдесят', 'шестьдесят', 'семьдесят', 'восемьдесят', 'девяносто'],
+	hundreds: ['сто', 'двести', 'триста', 'четыреста', 'пятьсот', 'шестьсот', 'семьсот', 'восемьсот', 'девятьсот'],
+	thousands: ['одна тысяча', 'тысячи', 'тысяч'],
+	million: ['миллион', 'миллиона']
 };
-let holder = 0;
-let result;
 
 function getNumberNames(num) {
-	result = getNum(num);
+	let result = '';
+	let length = getNumLength(num);
+	if (length == 1) {
+		result = getSimple(num);
+	}
+	if (length == 2 && num < 20) {
+		result = getDouble(num);
+	}
+	if (length == 2 && num >= 20) {
+		result = getDecimal(num);
+	}
+	if (length == 3) {
+		result = getHundreds(num);
+	}
+	if (length == 4) {
+		result = getThousands(num);
+	}
+	if (length == 5) {
+		result = getThousandsDec(num);
+	}
+	if (length == 6) {
+		result = getThousandsHund(num);
+	}
+	if (length == 7) {
+		result = getMillion(num);
+	}
 	return result;
 }
 
-function getNum(num) {
-	for (const key in numNames) {
-		if (numNames.hasOwnProperty(key)) {
-			const element = numNames[key];
-			if (num > +key) {
-				holder = key;
-			}
-			if (num === +key) {
-				result = element;
-				return result;
-			} else {
-				if (num < +key) {
-					result = numNames[holder];
-					num = num - holder;
-					result += ' ' + getNum(num);
-					return result;
-				}
-			}
+function getNumLength(num) {
+	let str = '';
+	str += num;
+	return str.length;
+}
+
+function getSimple(num) {
+	return numNames.simple[num] + ' ';
+}
+
+function getDouble(num) {
+	let index = parseInt(num.toString().slice(1, 2));
+	return numNames.double[index] + ' ';
+}
+
+function getDecimal(num) {
+
+	if (num % 10 == 0) {
+		let index = parseInt(num.toString().slice(0, 1)) - 2;
+		return numNames.decimal[index] + ' ';
+	}
+	let start = 30;
+	for (let i = 0; i < numNames.decimal.length; i++) {
+		const element = numNames.decimal[i]
+		if (num < start) {
+			return numNames.decimal[i] + ' ' + decreaseNumber(num);
+		} else {
+			start += 10;
 		}
 	}
 }
 
+function getHundreds(num) {
+	if (num % 100 == 0) {
+		let index = parseInt(num.toString().slice(0, 1)) - 1;
+		return numNames.hundreds[index] + ' ';
+	}
+	let start = 200;
+	for (let i = 0; i < numNames.hundreds.length; i++) {
+		const element = numNames.hundreds[i]
+		if (num < start) {
+			return numNames.hundreds[i] + ' ' + decreaseNumber(num);
+		} else {
+			start += 100;
+		}
+	}
+}
 
-console.log(getNumberNames(1001));
+function getThousands(num) {
+	let firstNum = parseInt(num.toString().slice(0, 1));
+	if (num % 1000 == 0 && num < 2000) {
+		return numNames.thousands[0];
+	} else if (num % 1000 == 0 && num < 3000) {
+		return 'две ' + numNames.thousands[1];
+	} else if (num % 1000 == 0 && num >= 3000 && num < 5000) {
+		return numNames.simple[firstNum] + ' ' + numNames.thousands[1];
+	} else if (num % 1000 == 0) {
+		return numNames.simple[firstNum] + ' ' + numNames.thousands[2];
+	}
+
+	if (num < 2000) {
+		return numNames.thousands[0] + ' ' + decreaseThousands(num);
+	} else if (num < 3000) {
+		return 'две ' + numNames.thousands[1] + ' ' + decreaseThousands(num);
+	} else if (num >= 3000 && num < 5000) {
+		return numNames.simple[firstNum] + ' ' + numNames.thousands[1] + ' ' + decreaseThousands(num);
+	} else {
+		return numNames.simple[firstNum] + ' ' + numNames.thousands[2] + ' ' + decreaseThousands(num);
+	}
+}
+
+function getThousandsDec(num) {
+	let firstNum = parseInt(num.toString().slice(0, 2));
+	let lastNum = parseInt(num.toString().slice(2));
+
+	if (num % 1000 == 0 && num < 20000) {
+		return getDouble(firstNum) + numNames.thousands[2];
+	} else if (num % 1000 == 0) {
+		return getDecimal(firstNum) + numNames.thousands[2]
+	}
+	// console.log(firstNum);
+	// console.log(getDecimal(firstNum));
+	return getDouble(firstNum) + numNames.thousands[2] + ' ' + getHundreds(lastNum);
+}
+
+function getThousandsHund(num) {
+	let firstNum = parseInt(num.toString().slice(0, 3));
+	let lastNum = parseInt(num.toString().slice(3));
+	return getHundreds(firstNum) + numNames.thousands[2] + ' ' + getHundreds(lastNum);
+}
+
+function getMillion(num) {
+	let firstNum = parseInt(num.toString().slice(0, 1));
+	let lastNum = parseInt(num.toString().slice(3));
+	return getSimple(firstNum) + numNames.million[0] + ' ' + getThousandsHund(lastNum);
+}
+
+function decreaseNumber(num) {
+	let index = parseInt(num.toString().slice(1, 3));
+	return getNumberNames(index);
+}
+
+function decreaseThousands(num) {
+	let index = parseInt(num.toString().slice(1, 4));
+	return getNumberNames(index);
+}
+
+console.log(getNumberNames(23020));
+
+
+// let holder = 0;
+// let result;
+
+// function getNum(num) {
+// 	for (const key in numNames) {
+// 		if (numNames.hasOwnProperty(key)) {
+// 			const element = numNames[key];
+// 			if (num > +key) {
+// 				holder = key;
+// 			}
+// 			if (num === +key) {
+// 				result = element;
+// 				return result;
+// 			} else {
+// 				if (num < +key) {
+// 					result = numNames[holder];
+// 					num = num - holder;
+// 					result += ' ' + getNum(num);
+// 					return result;
+// 				}
+// 			}
+// 		}
+// 	}
+// }
