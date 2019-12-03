@@ -97,3 +97,19 @@ function shuffle(arr) {
 	return result;
 }
 shuffle([1, 2, 3, 4, 5]);
+
+//
+//
+// Chunk Array on SubArrays;
+// [1,2,3,4] => [[1,2], [3,4]];
+function chunkArr(array, items) {
+	let iterCount = Math.ceil(array.length / items);
+	let result = [];
+	for (let i = 0; i < iterCount; i++) {
+		let arrChunk = [];
+		arrChunk = array.splice(0, items);
+		result.push(arrChunk);
+	}
+	return result;
+}
+chunkArr([1,2,3,4]);
