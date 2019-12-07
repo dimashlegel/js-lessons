@@ -3,7 +3,7 @@
 initGame(document.querySelector('#container'));
 
 function initGame(game) {
-	let fieldSize = 2;
+	let fieldSize = 3;
 	let field = createGameField(game);
 	let roundTime = 2;
 	let timer = createTimer(game);
@@ -24,29 +24,34 @@ function initGame(game) {
 
 	function createTimer(game) {
 		var timer = document.createElement('p');
-		timer.innerHTML = 'Time to end : ';
 		game.appendChild(timer);
 		return timer;
 	}
 
 	function startTimer() {
+		timer.innerHTML = 'Time to end : ';
+		let startRoundTime = roundTime;
 		window.timerId = window.setInterval(function() {
-			timers(roundTime);
+			timers(roundTime, startRoundTime);
 		}, 1000);
 	}
 
-	function timers(time) {
+	function timers(time, startTime) {
 		roundTime = time - 1;
 		timer.innerHTML = roundTime;
 		if (time == 0) {
-			stopTimer();
+			stopTimer(startTime);
 			window.setTimeout(newGame, 2000);
 		}
 	}
 
-	function stopTimer() {
+	function stopTimer(startTime) {
 		window.clearInterval(window.timerId);
 		timer.innerHTML = 'You lose';
+		window.setTimeout(function() {
+			timer.innerHTML = '';
+		}, 2000);
+		roundTime = startTime;
 	}
 
 	function clearGameField(field) {
