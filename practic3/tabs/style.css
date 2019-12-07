@@ -1,0 +1,11 @@
+#tabs-nav a.active {
+	color: red;
+}
+
+#tabs-content p {
+	display: none;
+}
+
+#tabs-content p.active {
+	display: block;
+}
