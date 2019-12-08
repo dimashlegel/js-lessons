@@ -113,3 +113,36 @@ function chunkArr(array, items) {
 	return result;
 }
 chunkArr([1,2,3,4]);
+
+////
+////
+////
+let arr = [1, 2, 3];
+// function declaration for each
+let newArr = [];
+// console.log(each(arr, forEach));
+function each(array, func) {
+	for (let i = 0; i < array.length; i++) {
+		newArr.push(func(array[i]));
+	}
+	return newArr;
+}
+function forEach(elem) {
+	elem = elem - 1;
+	return elem;
+}
+// function expression for each
+let forEach = function(arr, func) {
+	return func(arr);
+}
+let each = function(array) {
+	let newArr = [];
+	for (let i = 0; i < array.length; i++) {
+		newArr.push(array[i] - 1);
+	}
+	return newArr;
+}
+// console.log(forEach(arr, each));
+//
+//
+//
