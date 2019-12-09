@@ -100,7 +100,7 @@ shuffle([1, 2, 3, 4, 5]);
 
 //
 //
-// Chunk Array on SubArrays;
+// 6. Chunk Array on SubArrays;
 // [1,2,3,4] => [[1,2], [3,4]];
 function chunkArr(array, items) {
 	let iterCount = Math.ceil(array.length / items);
@@ -116,7 +116,7 @@ chunkArr([1,2,3,4]);
 
 ////
 ////
-////
+// 7. ForEach
 let arr = [1, 2, 3];
 // function declaration for each
 let newArr = [];
@@ -146,3 +146,26 @@ let each = function(array) {
 //
 //
 //
+// 8. Рекурсивний обхід об'єкту
+let company = { // тот же самый объект, сжатый для краткости
+  sales: [{name: 'John', salary: 1000}, {name: 'Alice', salary: 600 }],
+  development: {
+    sites: [{name: 'Peter', salary: 2000}, {name: 'Alex', salary: 1800 }],
+    internals: [{name: 'Jack', salary: 1300}]
+  }
+};
+// Функция для подсчёта суммы зарплат
+function sumSalaries(department) {
+	// debugger;
+  if (Array.isArray(department)) { // случай (1)
+    return department.reduce((prev, current) => prev + current.salary, 0); // сумма элементов массива
+  } else { // случай (2)
+    let sum = 0;
+    for (let subdep of Object.values(department)) {
+			console.log(Object.values(department));
+      sum += sumSalaries(subdep); // рекурсивно вызывается для подотделов, суммируя результаты
+    }
+    return sum;
+  }
+}
+sumSalaries(company); // 6700
