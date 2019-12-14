@@ -50,8 +50,7 @@ function fibonachi(n) {
 }
 // console.log(fibonachi(7));
 
-// 3.2
-
+// 3.2 --> slow solution
 function fibonachi(n) {
 	if (n <= 1) {
 		return n;
@@ -60,3 +59,77 @@ function fibonachi(n) {
 	}
 }
 // console.log(fibonachi(7));
+
+// 3.3 
+function fib(n) {
+	let a = 1;
+	let b = 1;
+	for (let i = 3; i <= n; i++) {
+		let c = a + b;
+		a = b;
+		b = c;
+	}
+	return b;
+}
+
+// 4. odnosvyaznyi spisok
+let list = {
+	value: 1,
+	next: {
+		value: 2,
+		next: {
+			value: 3,
+			next: {
+				value: 4,
+				next: null
+			}
+		}
+	}
+};
+
+// 4.1 cycle
+function printList(list) {
+	let tmp = list;
+	while (tmp) {
+		// console.log(tmp.value);
+		tmp = tmp.next;
+	}
+}
+// printList(list);
+
+// 4.2 recursion
+
+function printList(list) {
+	console.log(list.value);
+	if (list.next) {
+		return printList(list.next);
+	}
+}
+// printList(list);
+
+// 4. odnosvyaznyi spisok obratnuy poriadok
+// 4.1 recirsion
+function printListObr(list) {
+	let tmp = list;
+	if (tmp.next) {
+		printListObr(tmp.next);
+	}
+	console.log(tmp.value);
+}
+
+// 4.2 cycle
+
+function printListObr(list) {
+	let tmp = list;
+	let arr = [];
+	while (tmp) {
+		arr.push(tmp.value);
+		tmp = tmp.next;
+	}
+	for (let i = arr.length - 1; i >= 0; i--) {
+		const element = arr[i];
+		console.log(element);
+	}
+}
+
+// printListObr(list);
