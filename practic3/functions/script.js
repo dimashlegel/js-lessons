@@ -112,7 +112,7 @@ function chunkArr(array, items) {
 	}
 	return result;
 }
-chunkArr([1,2,3,4]);
+chunkArr([1, 2, 3, 4]);
 
 ////
 ////
@@ -127,45 +127,117 @@ function each(array, func) {
 	}
 	return newArr;
 }
+
 function forEach(elem) {
 	elem = elem - 1;
 	return elem;
 }
 // function expression for each
-let forEach = function(arr, func) {
-	return func(arr);
-}
-let each = function(array) {
-	let newArr = [];
-	for (let i = 0; i < array.length; i++) {
-		newArr.push(array[i] - 1);
-	}
-	return newArr;
-}
-// console.log(forEach(arr, each));
+// let forEach = function(arr, func) {
+// 	return func(arr);
+// }
+// let each = function(array) {
+// 	let newArr = [];
+// 	for (let i = 0; i < array.length; i++) {
+// 		newArr.push(array[i] - 1);
+// 	}
+// 	return newArr;
+// }
+// console.log(forEach1(arr, each));
 //
 //
 //
 // 8. Рекурсивний обхід об'єкту
 let company = { // тот же самый объект, сжатый для краткости
-  sales: [{name: 'John', salary: 1000}, {name: 'Alice', salary: 600 }],
-  development: {
-    sites: [{name: 'Peter', salary: 2000}, {name: 'Alex', salary: 1800 }],
-    internals: [{name: 'Jack', salary: 1300}]
-  }
+	sales: [{
+		name: 'John',
+		salary: 1000
+	}, {
+		name: 'Alice',
+		salary: 600
+	}],
+	development: {
+		sites: [{
+			name: 'Peter',
+			salary: 2000
+		}, {
+			name: 'Alex',
+			salary: 1800
+		}],
+		internals: [{
+			name: 'Jack',
+			salary: 1300
+		}]
+	}
 };
 // Функция для подсчёта суммы зарплат
 function sumSalaries(department) {
 	// debugger;
-  if (Array.isArray(department)) { // случай (1)
-    return department.reduce((prev, current) => prev + current.salary, 0); // сумма элементов массива
-  } else { // случай (2)
-    let sum = 0;
-    for (let subdep of Object.values(department)) {
+	if (Array.isArray(department)) { // случай (1)
+		return department.reduce((prev, current) => prev + current.salary, 0); // сумма элементов массива
+	} else { // случай (2)
+		let sum = 0;
+		for (let subdep of Object.values(department)) {
 			console.log(Object.values(department));
-      sum += sumSalaries(subdep); // рекурсивно вызывается для подотделов, суммируя результаты
-    }
-    return sum;
-  }
+			sum += sumSalaries(subdep); // рекурсивно вызывается для подотделов, суммируя результаты
+		}
+		return sum;
+	}
 }
-sumSalaries(company); // 6700
+// sumSalaries(company); // 6700
+
+// 9. ForEach 2
+
+function eachForArrFromArrFunc() {
+	let arr3 = [1, 2, 3, 4, 5];
+	let f1 = function(elem) {
+		return elem + 1;
+	}
+	let f2 = function(elem) {
+		return elem + 11;
+	}
+	let f3 = function(elem) {
+		return elem + 111;
+	}
+	let arrFunc = [f1, f2, f3];
+
+	function forEach2(array, arrayFunc) {
+		let counter1 = 0;
+		let counter2 = 0;
+		for (let i = 0; i < array.length; i++) {
+			if (counter2 > arrayFunc.length - 1) {
+				counter2 = 0;
+			}
+			for (let j = 0; j < arrayFunc.length; j++) {
+				const func = arrayFunc[counter2];
+				counter2 += 1;
+				console.log(func(array[counter1]));
+				break;
+			}
+			counter1 += 1;
+			continue;
+		}
+	}
+	forEach2(arr3, arrFunc);
+}
+
+// eachForArrFromArrFunc();
+
+// 10. 
+
+function makeWorker() {
+	debugger;
+	let name = "Pete";
+
+	return function() {
+		alert(name);
+	};
+}
+
+let name = "John";
+
+// create a function
+let work = makeWorker();
+
+// call it
+work()
