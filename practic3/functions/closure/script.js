@@ -162,21 +162,75 @@
 
 // 9.  Дан массив цветов. Даны абзацы. По первому нажатию на абзац он должен покраситься в первый цвет из массива, по второму нажатию - во второй и так далее. Все абзацы работают независимо.
 
-let parArr = document.querySelectorAll('p');
-let colors = ['red', 'green', 'blue'];
+// let parArr = document.querySelectorAll('p');
+// let colors = ['red', 'green', 'blue'];
 
-parArr.forEach(function(elem) {
-	let getColor = changeColor(elem);
-	elem.addEventListener('click', getColor);
-})
+// parArr.forEach(function(elem) {
+// 	let getColor = changeColor(elem);
+// 	elem.addEventListener('click', getColor);
+// })
 
-function changeColor(elem) {
-	let index = 0;
-	return function() {
-		elem.style.color = colors[index];
-		index++;
-		if (index >= colors.length) {
-			index = 0;
-		}
-	};
-}
+// function changeColor(elem) {
+// 	let index = 0;
+// 	return function() {
+// 		elem.style.color = colors[index];
+// 		index++;
+// 		if (index >= colors.length) {
+// 			index = 0;
+// 		}
+// 	};
+// }
+// 
+// 10.  Даны кнопки. Каждая кнопка по нажатию на нее выводить следующее число Фибоначчи. Кнопки работают независимо.
+// 10.1
+// let buttons = document.querySelectorAll('.btn');
+// let arr = [1];
+// let lastNum;
+
+// function fibonachi(n) {
+// 	let accum = 1;
+// 	let current = 1;
+// 	// let arr = [1];
+// 	// for (let i = 1; i < n - 1; i++) {
+// 	for (let i = 1; i < n - 1; i++) {
+// 		arr.push(current);
+// 		current += accum;
+// 		accum = arr[i];
+// 	}
+// 	lastNum = arr[arr.length - 1] + arr[arr.length - 2];
+// 	return arr;
+// }
+
+// fibonachi(7);
+
+// let index = 0;
+// buttons.forEach(function(elem) {
+// 	elem.addEventListener('click', showNum);
+// })
+
+// function showNum() {
+// 	this.innerHTML = arr[index];
+// 	if (arr[index] + arr[arr.length - 1] >= lastNum) {
+// 		this.removeEventListener('click', showNum);
+// 	}
+// 	index += 1;
+// }
+//
+///////
+// 10.2
+// var f1 = function(){
+// 	var a = 0;
+// 	var b = 1;
+// 	var temp;
+// 	return function() {
+// 		this.nextElementSibling.innerHTML = a;
+// 		temp = a;
+// 		a = b;
+// 		b = temp + a;
+// 	}
+// }
+
+// var buts_collect = document.getElementsByTagName('button');
+// for (var i = 0; i < buts_collect.length; i++) {
+// 	buts_collect[i].addEventListener('click', f1());
+// }
