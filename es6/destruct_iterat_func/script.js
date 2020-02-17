@@ -1,4 +1,6 @@
 'use strict'
+
+// Деструктурирующее присваивание – это специальный синтаксис, который позволяет нам «распаковать» массивы или объекты в кучу переменных, так как иногда они более удобны. Деструктуризация также прекрасно работает со сложными функциями, которые имеют много параметров, значений по умолчанию и так далее.
 // code.mu
 
 // for destructurization
@@ -87,3 +89,17 @@ parags.forEach(elem => elem.addEventListener('click',
 	() => window.setInterval(
 		() => elem.innerHTML = Number(elem.innerHTML) + 1, 1000)
 ));
+
+//
+//
+//
+let user = {
+	name: "John",
+	age: 30
+};
+
+// цикл по ключам и значениям
+
+for (let [key, value] of Object.entries(user)) {
+	alert(`${key}:${value}`); // name:John, then age:30
+}
