@@ -14,10 +14,141 @@ let str2 = 'a1b2c3';
 
 // 1.3 С помощью метода test определите, что переданная строка является емэйлом. Примеры емэйлов для тестирования mymail@mail.ru, my.mail@mail.ru, my-mail@mail.ru, my_mail@mail.ru, mail@mail.com, mail@mail.by, mail@yandex.ru. 
 let str3 = 'my_mail@mail.ru';
-let regExp = /^[a-zA-z]+\W?[a-z]+@[a-zA-z]+\.[a-z]{2,3}$/;
-console.log(regExp.test(str3));
+let regExp3 = /^[a-zA-z]+\W?[a-z]+@[a-zA-z]+\.[a-z]{2,3}$/;
+// console.log(regExp3.test(str3));
+
+// match - позволяет получить ту часть строки, которая попала под регулярное выражение. Этот метод работает по-разному в зависимости от того, есть модификатор g или нет. Если он есть - метод возвращает массив подстрок, которые попали под регулярное выражение.
 
 // 1.4 Дана строка с текстом, в котором могут быть емейлы. С помощью match найдите все емэйлы в виде массива
-let str4 = '';
-let regExp = //;
-console.log(regExp.test(str4));
+let str4 = 'hello pas..t-_er9_2@ukr.net ho yyuu d.ima-shlegel@gmail.com';
+let regExp4 = /\w+\S*\w+@[a-zA-Z]+\.[a-z]{2,3}/g;
+// console.log(str4.match(regExp4));
+
+// 1.5 С помощью test определите, что переданная строка является доменом. Примеры доменов: site.ru, site.com, my-site.com.
+let str5 = 'my-site.com';
+let regExp5 = /^[a-z._-]+\.[a-z]{2,3}$/;
+// console.log(regExp5.test(str5));
+
+// 1.6 С помощью test определите, что переданная строка является доменом. Примеры доменов: http://site.ru, http://site.com. 
+let str6 = 'http://site.ru';
+let regExp6 = /^http:\/\/[a-z._-]+\.[a-z]{2,3}$/;
+// console.log(regExp6.test(str6));
+
+// 1.7 С помощью test определите, что переданная строка является доменом вида http://site.ru. Протокол может быть как http, так и https.
+let str7 = 'https://site.ru';
+let regExp7 = /^https?:\/\/[a-z._-]+\.[a-z]{2,3}$/;
+// console.log(regExp7.test(str7));
+
+// 1.8 С помощью test определите, что переданная строка начинается с http или с https.
+let str8 = 'https://site.ru';
+let regExp8 = /^https?/;
+// console.log(regExp8.test(str8));
+
+// 1.9 С помощью test определите, что переданная строка заканчивается расширением txt, html или php
+let str9 = 'https://site.php';
+let regExp9 = /[txt|html|php]$/;
+// console.log(regExp9.test(str9));
+
+// 1.11 С помощью test узнайте является ли строка числом, длиной до 12 цифр
+let str11 = '000000000000';
+let regExp11 = /^\d{1,12}$/;
+// console.log(regExp11.test(str11));
+
+// 1.12 Дана строка с буквами, пробелами и цифрами. Найдите сумму всех чисел из данной строки.
+let str12 = 'qw1 ddk2kdk 3';
+let regExp12 = /\d/g;
+let arrNumb1 = str12.match(regExp12)
+// console.log(arrNumb1.reduce((accumulator, currentValue) => +accumulator + +currentValue));
+
+
+// Задачи на replace
+
+// 1.13 С помощью replace замените в строке домены вида http://site.ru, http://site.com на <a href="http://site.ru">site.ru</a>.
+let str13 = 'http://site.ru';
+// console.log(str13.replace(/http:\/\/site\.[a-z]{2,3}/g,
+	// "<a href=\"http:\/\/site\.ru\">site\.ru<\/a>"));
+
+// 1.14 С помощью replace замените все повторяющиеся пробелы на один.
+let str14 = '12 aa  aaa 56';
+// console.log(str14.replace(/\s{2}/g, " "));
+
+// 1.15 Найдите и удалите все комментарии CSS.
+let str15 = '/*aaaaa*/ ddd';
+// console.log(str15.replace(/\/\*.*?\//g, ""));
+
+// 1.16 Найдите и удалите все комментарии HTML
+let str16 = '<!-- aaaaa --> <!-- vvv --> ddd';
+// console.log(str16.replace(/<!--.*?-->/g, ""));
+
+//
+// Позитивный и негативный просмотр (пережающая (lookahead) и ретроспективная (lookbehind) проверка.)
+//
+// Скобки (?= ) называются позитивный просмотр вперед. Позитивный - так как 'x' (в нашем случае) должен быть - только тогда произойдет замена. Есть и негативный просмотр вперед - (?! ) - он, наоборот, говорит, что чего-то должно не быть:
+
+// console.log('aaax aaab'.replace(/aaa(?=x)/g, '!')); //вернет '!x aaab'
+// console.log('aaax xaaa'.replace(/aaa(?!x)/g, '!')); //вернет 'aaax x!'
+
+// Шаблон				Тип																Совпадение
+// X(?=Y)				Позитивная опережающая						X, если за ним следует Y
+// X(?!Y)				Негативная опережающая						X, если за ним НЕ следует Y
+// (?<=Y)X			Позитивная ретроспективная				X, если следует за Y
+// (?<!Y)X			Негативная ретроспективная				X, если НЕ следует за Y
+
+// На позитивный и негативный просмотр
+
+// 1.17 С помощью позитивного и негативного просмотра найдите все строки по шаблону 3 буквы a, затем буква b и поменяйте 3 буквы a на знак '!'. То есть из 'aaab' нужно сделать '!b'.
+let str17 = 'aaab';
+// console.log(str17.replace(/a{3}(?=b)/g, '!'));
+
+// 1.18 С помощью позитивного и негативного просмотра найдите все строки по шаблону 3 буквы a, затем любая буква, но не b и поменяйте 3 буквы a на знак '!'. То есть из, к примеру, 'aaaw' нужно сделать '!w', а 'aaab' не поменяется.
+let str18 = 'aaab aaaw';
+// console.log(str18.replace(/a{3}(?!b)/g, '!'));
+
+// На replace
+
+// 1.19 Дана строка с целыми числами. С помощью регулярки преобразуйте строку так, чтобы вместо этих чисел стояли их квадраты.
+let str19 = '1 2 3';
+// console.log(str19.replace(/\d+/g, function(match) {
+// 	return +match * +match;
+// }));
+
+// 1.20 Дана строка с целыми числами. Найдите числа, стоящие в кавычках и увеличьте их в два раза. Пример: из строки 2aaa'3'bbb'4' сделаем строку 2aaa'6'bbb'8'.
+let str20 = "2aaa'3'bbb'4'";
+// console.log(str20.replace(/(?<=')\d(?=')/g, function(match) {
+// 	return match * 2;
+// }));
+
+// 1.21 Дана строка в которой есть вставки {{текст}}. Найдите все такие вставки и поменяйте в них порядок букв на обратный (то есть из 'текст' нужно сделать 'тскет'). 
+let str21 = "dghd hdgd {{qwerty}} ddjd {{abc}}";
+// console.log(str21.replace(/(?<=\{\{)[a-z]+(?=\}\})/g, function(match) {
+// 	return match.split('').reverse().join('');
+// }));
+
+// 1.22 Дана строка '23 + 35 ='. Числа могут быть любыми. Выведите на экран результат операции в виде '23 + 35 = 58'.
+let str22 = "23 + 35 = ";
+// console.log(str22.replace(/(\d+)\s\+\s(\d+)\s=\s/g, function(match, match1, match2) {
+// 	let sum = +match1 + +match2;
+// 	return match + sum;
+// }));
+
+// Головоломки
+
+// 1.1.1 Определите, что год находится в интервале от 1900 до 2100 с помощью одного только регулярного выражения.
+let year = '2001';
+// console.log(/^19\d\d|20\d\d|2100$/g.test(year));
+
+// 1.1.2 С помощью test определите, что переданная строка является корректным временем вида '12:59', '23:41', '00:12', '00:00', '09:15'. Время '24.00', '25.00', '12.60', '12.93', '41.93' является некорректным.
+let time = '24.00';
+// console.log(/^(0\d)|(1\d)|(2[0-3]):[0-6]\d$/g.test(time));
+
+// 1.1.3 Удалите одной регуляркой все слова из предложения, содержащие две одинаковые следующие друг за другом буквы.
+let srting = 'hello how arre you';
+console.log(srting.replace(/\W*\w*(\w)\1\w*\W*/g, ' '));
+
+// 1.1.4 Удалите одной регуляркой все повторяющиеся слова из строки, например для 'dsf xxx xxx sd' должно вернуть 'dsf xxx sd'.
+let srting2 = 'dsf xxx xxx sd sd s';
+console.log(srting2.replace(/\b(\w+)\s+\1/g, '$1'));
+
+// 1.1.5 Решите предыдущую задачу с учетом того, что слово может повторяться много раз. Например 'dsf xxx xxx xxx xxx xxx sd' должно вернуть 'dsf xxx sd'. 
+let srting3 = 'dsf xxx xxx xxx xxx sd sd s';
+console.log(srting3.replace(/\b(\w+)\b(?:\s+\1\b)+/g, '$1'));
