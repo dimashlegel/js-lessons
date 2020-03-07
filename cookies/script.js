@@ -70,7 +70,83 @@ function setCookie(name, value, options = {}) {
 // 3.deleteCookie(name)
 
 function deleteCookie(name) {
-  setCookie(name, "", {
-    'max-age': -1
-  })
+	setCookie(name, "", {
+		'max-age': -1
+	})
 }
+
+// Examples
+
+// 1.1 Установите куку с вашем именем и вашим возрастом. Выведите на экран содержимое этих двух кук.
+// document.cookie = "name=Dima";
+// document.cookie = "age=25";
+// console.log(getCookie('name'));
+// console.log(getCookie('age'));
+
+// 1.3 Дан инпут. Ведите в него город, например, Минск. Сохраните его в куки. Зайдя на другую страницу сайта вы должны увидеть фразу 'ваш город - Минск'.
+
+// document.addEventListener('DOMContentLoaded', function() {
+// 	// your code goes here
+// }, false);
+
+// let city = document.getElementById('city');
+// city.addEventListener('blur', function() {
+// 	let cityName = city.value;
+// 	document.cookie = "city=" + cityName;
+// })
+
+// 1.4 При заходе на страницу спросите с помощью инпута день рождения пользователя. Когда он зайдет с следующий раз - напишите сколько месяцев, дней, часов, минут и секунд осталось до его дня рождения. И пусть по этим числам запуститься обратный отсчет (то есть они будут тикать).
+
+let dateBirth = document.getElementById('dateBirth');
+let enter = document.getElementById('enter');
+
+enter.addEventListener('click', function() {
+	document.cookie = 'dateBirth=' + dateBirth.value;
+})
+
+let birthday = getCookie('dateBirth');
+
+function getDaysToBirth() {
+	let birthArr = birthday.split('.');
+	let today = new Date();
+	let nextBirth = new Date(today.getFullYear(), Number(birthArr[1]) - 1, Number(birthArr[0]));
+
+	if (today - nextBirth > 0) {
+		nextBirth = new Date(today.getFullYear() + 1, Number(birthArr[1]) - 1, Number(birthArr[0]));
+	}
+
+	today = Math.floor((nextBirth - today) / 1000);
+
+	let tsec = today % 60;
+	today = Math.floor(today / 60);
+	if (tsec < 10) tsec = '0' + tsec;
+
+	let tmin = today % 60;
+	today = Math.floor(today / 60);
+	if (tmin < 10) tmin = '0' + tmin;
+
+	let thour = today % 24;
+	today = Math.floor(today / 24);
+	let timestr = today + " дней " + thour + " часов " + tmin + " минут " + tsec + " секунд";
+
+	document.querySelector('#date').innerHTML = timestr;
+	window.setTimeout(getDaysToBirth, 1000);
+}
+
+if (birthday) getDaysToBirth();
+
+
+// 1.5 Дана форма с инпутами. Пользователь вводит какие-то данные и закрывает страницу (не факт, что он заполнил всю форму). Сделайте так, чтобы при следующем заходе на страницу введенные им ранее данные стояли на своих местах.
+
+let one = getCookie('one');
+if (one) document.getElementById('one').value = one;
+let two = getCookie('two');
+if (two) document.getElementById('two').value = two;
+let three = getCookie('three');
+if (three) document.getElementById('three').value = three;
+
+window.addEventListener('beforeunload', function() {
+	document.querySelectorAll('#saveInput input').forEach(function(el) {
+		document.cookie = el.id + '=' + el.value;
+	})
+});
