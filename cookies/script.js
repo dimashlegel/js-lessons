@@ -150,3 +150,115 @@ window.addEventListener('beforeunload', function() {
 		document.cookie = el.id + '=' + el.value;
 	})
 });
+
+// 1.6 Даны чекбоксы. Пользователь произвольно отмечает их и закрывает страницу. Сделайте так, чтобы при следующем заходе на страницу чекбоксы стали отмеченными так, как это сделал пользователь ранее. 
+
+let one1 = getCookie('one1');
+if (one1 == 'true') document.getElementById('one1').checked = true;
+let two2 = getCookie('two2');
+if (two2 == 'true') document.getElementById('two2').checked = true;
+let three3 = getCookie('three3');
+if (three3 == 'true') document.getElementById('three3').checked = true;
+
+window.addEventListener('beforeunload', () => {
+	document.querySelectorAll('input[type=checkbox]').forEach((el) => {
+		document.cookie = el.id + '=' + el.checked;
+	});
+})
+
+// 1.7 При заходе на страницу появляется счетчик обратного отсчета. Когда он доходит до нуля, на странице пишется - 'отсчет закончен'. При обновлении страницы счетчик не должен начинать идти заново.
+
+document.addEventListener('DOMContentLoaded', function() {
+	let ch = getCookie('ch');
+	if (!ch) {
+		let count = 10;
+		window.idInterval = setInterval(function() {
+			if (count == 0) {
+				document.querySelector('#ch').innerHTML = 'Відлік закінчений';
+				clearInterval(window.idInterval);
+				document.cookie = "ch=true";
+			} else {
+				document.querySelector('#ch').innerHTML = count--;
+			}
+		}, 1000)
+	} else {
+		document.querySelector('#ch').innerHTML = 'Відлік закінчений';
+	}
+}, false);
+
+// 1.8 Дан текcтареа. Пользователь может потянуть за его угол и изменить его размер. Сделайте так, чтобы при следующем заходе на страницу, текстареа был заданного размера.
+
+document.addEventListener('DOMContentLoaded', function() {
+	let textarea = document.getElementById('textarea');
+	let areaHeight = getCookie('areaHeight');
+	let areaWidth = getCookie('areaWidth');
+	if (areaHeight || areaWidth) {
+		textarea.style.height = areaHeight;
+		textarea.style.width = areaWidth;
+	}
+	window.addEventListener('beforeunload', function() {
+		document.cookie = 'areaHeight=' + textarea.style.height;
+		document.cookie = 'areaWidth=' + textarea.style.width;
+	})
+}, false)
+
+// 1.9 Дан инпут. В него можно ввести данные, затем поредактировать их, затем еще поредактировать. Пусть инпут хранит историю своих изменений (даже после перезагрузки страницы). Сверху над инпутом должны появится стрелочки, с помощью которых можно перемещаться по истории.
+
+document.addEventListener('DOMContentLoaded', function() {
+
+	function getActiveHistory() {
+		document.querySelector('#val').value = history[activ];
+	}
+
+	let history = getCookie("history");
+	if (history) history = history.split('#');
+	else history = [];
+	let activ = history.length;
+
+	window.addEventListener('beforeunload', function() {
+		document.cookie = "history=" + history.join("#");
+	})
+
+	document.querySelector('#backward').addEventListener('click', function() {
+		if (activ > 0) activ--;
+		getActiveHistory();
+	});
+
+	document.querySelector('#forward').addEventListener('click', function() {
+		if (activ < history.length - 1) activ++;
+		getActiveHistory();
+	});
+
+	document.querySelector('#val').addEventListener('change', function() {
+		if (this.value)
+			history.push(this.value);
+		activ = history.length - 1;
+	});
+
+}, false);
+
+
+// 1.10 Дан сайт. Пусть каждая страница для каждого посетителя хранит время последнего захода и количество заходов на нее этим посетителем. Пусть эти данные показываются при заходе в формате 'с последнего захода прошло ... вы посещали эту страницу ... раз'
+
+document.addEventListener('DOMContentLoaded', function() {
+
+	let visit = getCookie("visit");
+	let dateVisit = getCookie("dateVisit");
+	if (dateVisit) {
+		dateVisit = dateVisit.split("-");
+		dateVisit = new Date(dateVisit[0], dateVisit[1], dateVisit[2], dateVisit[3], dateVisit[4], dateVisit[5]);
+	}
+
+	let date = new Date();
+	if (visit || dateVisit) {
+		alert("с последнего захода прошло " + ((date - dateVisit) / 1000).toFixed(2) + " секунд, вы посещали эту страницу " + visit + " раз");
+		visit++;
+	} else {
+		visit = 1;
+	}
+
+	dateVisit = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate() + "-" + date.getHours() + "-" + date.getMinutes() + "-" + date.getSeconds();
+	document.cookie = "visit=" + visit;
+	document.cookie = "dateVisit=" + dateVisit;
+	
+})
