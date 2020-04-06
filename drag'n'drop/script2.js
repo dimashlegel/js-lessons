@@ -30,14 +30,14 @@ elems.forEach((elem, index) => {
 	elem.addEventListener('dragstart', function(event) {
 		currentElem = this;
 		event.dataTransfer.setData('text', index); // work just in gragstart event
-		event.dataTransfer.setDragImage(img, 10, 10);
 	})
 });
 
 parent.addEventListener('dragover', function(event) {
-	// console.log(this);
 	event.preventDefault();
+	event.dataTransfer.dropEffect = 'link'; // link, copy, move, none;
 })
+
 parent.addEventListener('drop', function(event) {
 	// this.appendChild(currentElem);
 	this.appendChild(elems[event.dataTransfer.getData('text')]);
