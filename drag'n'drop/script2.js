@@ -20,16 +20,17 @@
 // let elem = document.querySelector('#elem');
 let elems = document.querySelectorAll('.elem');
 let parent = document.querySelector('#parent');
-let shiftX;
-let shiftY;
-
+let img = new Image();
+img.src = 'image.png'
+// let shiftX;
+// let shiftY;
 let currentElem;
+
 elems.forEach((elem, index) => {
 	elem.addEventListener('dragstart', function(event) {
 		currentElem = this;
-		// console.log(event.dataTransfer);
 		event.dataTransfer.setData('text', index); // work just in gragstart event
-		// console.log(event.dataTransfer);
+		event.dataTransfer.setDragImage(img, 10, 10);
 	})
 });
 
@@ -40,5 +41,4 @@ parent.addEventListener('dragover', function(event) {
 parent.addEventListener('drop', function(event) {
 	// this.appendChild(currentElem);
 	this.appendChild(elems[event.dataTransfer.getData('text')]);
-	// console.log();
 })
