@@ -24,30 +24,21 @@ let shiftX;
 let shiftY;
 
 let currentElem;
-elems.forEach(elem => {
+elems.forEach((elem, index) => {
 	elem.addEventListener('dragstart', function(event) {
 		currentElem = this;
+		// console.log(event.dataTransfer);
+		event.dataTransfer.setData('text', index); // work just in gragstart event
+		// console.log(event.dataTransfer);
 	})
 });
-// elem.addEventListener('drag', function(event) {
-// 	console.log('ss');
-// });
-
-// elem.addEventListener('dragstart', function(event) {
-// 	shiftX = event.pageX - elem.getBoundingClientRect().left;
-// 	shiftY = event.pageY - elem.getBoundingClientRect().top;
-// });
-
-// elem.addEventListener('dragend', function(event) {
-// 	elem.style.top = event.pageY - shiftY + 'px';
-// 	elem.style.left = event.pageX - shiftX + 'px';
-// });
 
 parent.addEventListener('dragover', function(event) {
 	// console.log(this);
 	event.preventDefault();
 })
 parent.addEventListener('drop', function(event) {
-	this.appendChild(currentElem);
-	// console.log(currentElem);
+	// this.appendChild(currentElem);
+	this.appendChild(elems[event.dataTransfer.getData('text')]);
+	// console.log();
 })
