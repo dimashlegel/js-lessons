@@ -1,0 +1,16 @@
+
+#elem {
+	width: 100px;
+	height: 100px;
+	border: 1px solid red;
+}
+
+#parent {
+	margin-top: 100px;
+	max-width: 200px;
+	width: 100%;
+	height: 200px;
+	border: 1px solid black;
+	white-space: normal;
+	overflow-wrap: break-word;
+}
