@@ -1,14 +1,24 @@
+#panel {
+	box-sizing: border-box;
+	width: 300px;
+	border: 1px solid #000;
+	height: 120px;
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: center;
+	align-items: center;
+}
 
-#elem {
-	position: absolute;
-	top: 50px;
-	left: 50px;
+.elem {
+	box-sizing: border-box;
 	width: 100px;
 	height: 100px;
 	border: 1px solid red;
+	text-align: center;
 }
 
 #parent {
+	position: relative;
 	margin-top: 100px;
 	max-width: 200px;
 	width: 100%;
@@ -16,4 +26,8 @@
 	border: 1px solid black;
 	white-space: normal;
 	overflow-wrap: break-word;
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: start;
+	align-items: flex-start;
 }

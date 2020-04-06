@@ -17,36 +17,37 @@
 
 // 1.1
 
-let elem = document.querySelector('#elem');
+// let elem = document.querySelector('#elem');
+let elems = document.querySelectorAll('.elem');
 let parent = document.querySelector('#parent');
 let shiftX;
 let shiftY;
 
-elem.addEventListener('dragstart', function(event) {
-	shiftX = event.pageX - elem.getBoundingClientRect().left;
-	shiftY = event.pageY - elem.getBoundingClientRect().top;
+let currentElem;
+elems.forEach(elem => {
+	elem.addEventListener('dragstart', function(event) {
+		currentElem = this;
+	})
 });
-
-elem.addEventListener('dragend', function(event) {
-	elem.style.top = event.pageY - shiftY + 'px';
-	elem.style.left = event.pageX - shiftX + 'px';
-});
-
-// parent.addEventListener('dragover', function(event) {
-// 	event.preventDefault();
-// 	this.style.borderStyle = 'dotted';
+// elem.addEventListener('drag', function(event) {
+// 	console.log('ss');
 // });
 
-// parent.addEventListener('drop', function(event) { // must be event dragover
-// 	this.style.borderColor = 'blue';
-// 	this.style.borderStyle = 'solid';
-// 	// this.innerHTML += '!';
+// elem.addEventListener('dragstart', function(event) {
+// 	shiftX = event.pageX - elem.getBoundingClientRect().left;
+// 	shiftY = event.pageY - elem.getBoundingClientRect().top;
 // });
 
-// parent.addEventListener('dragenter', function(event) { // must be event dragover
-// 	this.innerHTML += '!';
+// elem.addEventListener('dragend', function(event) {
+// 	elem.style.top = event.pageY - shiftY + 'px';
+// 	elem.style.left = event.pageX - shiftX + 'px';
 // });
 
-// parent.addEventListener('dragleave', function(event) { // must be event dragover
-// 	this.innerHTML += '?';
-// });
+parent.addEventListener('dragover', function(event) {
+	// console.log(this);
+	event.preventDefault();
+})
+parent.addEventListener('drop', function(event) {
+	this.appendChild(currentElem);
+	// console.log(currentElem);
+})
