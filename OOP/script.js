@@ -6,40 +6,25 @@ class User {
 			this._surname = surname;
 	}
 
-	setAge(age) {
-		if (this._checkAge(age)) {
-			this._age = age; // setter - add property to object;
-		}
-	}
-
-	_checkAge(age) { // helper privat method for setter;
-		if (age > 0 && age < 100) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	getAge(age) {
-		return this._age;
-	}
-
 	getFullName() {
 		return this._name + ' ' + this._surname;
 	}
+}
 
-	getName() { // getter - just read privat property;
-		return this._name;
+class Worker extends User { // наследование класса
+
+	constructor(name, surname, rate, days) {
+		super(name, surname); // для використання конструктора в класі потомка потрібний метод super // must be before use this
+		// this.name = name,
+		// 	this.surname = surname, // use from parent constructor
+		this.rate = rate,
+			this.days = days;
 	}
 
-	getSurName() { // getter - just read privat property;
-		return this._surname;
+	getSalary() {
+		return this.rate * this.days;
 	}
 }
 
-let user = new User('qw', 'as');
-user.setAge(35);
-console.log(user.getName());
-console.log(user.getSurName());
-console.log(user.getFullName());
-console.log(user.getAge());
+let worker = new Worker('Vasia', 'Pupkin', 350, 21);
+console.log(worker.getSalary());
