@@ -24,7 +24,35 @@ class Worker extends User { // наследование класса
 	getSalary() {
 		return this.rate * this.days;
 	}
+
+	// rewrite parent method
+	getFullName() {
+		// return this._name + ' ' + this._surname + '!';
+		return super.getFullName() + '!';
+	}
 }
 
 let worker = new Worker('Vasia', 'Pupkin', 350, 21);
-console.log(worker.getSalary());
+// console.log(worker.getSalary());
+// console.log(worker.getFullName()); // Vasia Pupkin !
+
+// work wuth DOM elements
+
+class Elem {
+	constructor(selector) {
+		this.elem = document.querySelector(selector);
+	}
+
+	html(text) {
+		this.elem.innerHTML = text;
+		return this; // використовується для створення ланцюжка з методів
+	}
+	attr(attribute, value) {
+		this.elem.setAttribute(attribute, value);
+		return this; // використовується для створення ланцюжка з методів
+	}
+}
+
+let elem = new Elem('#test');
+
+elem.html('!').attr('title', 'qw').attr('class', 'class1'); // ланцюжок з методів
