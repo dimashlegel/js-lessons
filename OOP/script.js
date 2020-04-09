@@ -56,3 +56,29 @@ class Elem {
 let elem = new Elem('#test');
 
 elem.html('!').attr('title', 'qw').attr('class', 'class1'); // ланцюжок з методів
+
+
+///
+///
+///
+
+class Rectangle {
+	constructor(height, width) {
+		let elem = document.createElement('div');
+		this.elem = elem;
+		this.setWidth(width);
+		this.setHeight(height);
+		elem.style.border = '1px solid red';
+		document.body.appendChild(elem);
+	}
+	setWidth(width) {
+		this.elem.style.width = width + 'px';
+	}
+	setHeight(height) {
+		this.elem.style.height = height + 'px';
+	}
+}
+
+let rect = new Rectangle(200, 200);
+rect.setWidth(122);
+rect.setHeight(320);
