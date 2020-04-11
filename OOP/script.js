@@ -1,7 +1,7 @@
 'use strict'
 // learnjs
 //класс – это разновидность функции.
-
+// инкапсуляция - в терминах ООП отделение внутреннего интерфейса от внешнего.
 // Class Expression (по аналогии с Function Expression):
 let User1 = class {
 	sayHi() {
