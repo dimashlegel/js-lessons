@@ -10,6 +10,20 @@ let User1 = class {
 };
 // task extend Class
 
+// Operator instanceof -  позволяет проверить, к какому классу принадлежит объект, с учётом наследования.
+// obj instanceof Class
+// class Rabbit {}
+// let rabbit = new Rabbit();
+// это объект класса Rabbit?
+// alert( rabbit instanceof Rabbit ); // true
+// Давайте обобщим, какие методы для проверки типа мы знаем:
+
+// работает 			для					возвращает
+// typeof				примитивов		строка
+// {}.toString	примитивов, 	встроенных объектов, объектов с Symbol.toStringTag	строка
+// instanceof		объектов			true/false
+
+
 class Clock {
   constructor({ template }) {
     this.template = template;
