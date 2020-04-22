@@ -1,5 +1,7 @@
 'use strict'
 
+// Если обработчик в .then (или в catch/finally, без разницы) возвращает промис, последующие элементы цепочки ждут, пока этот промис выполнится. Когда это происходит, результат его выполнения (или ошибка) передаётся дальше.
+
 // Пример: loadScript
 loadScript("/article/promise-chaining/one.js")
 	.then(function(script) {
@@ -63,3 +65,20 @@ loadJson('/article/promise-chaining/user.json')
 	.then(showAvatar)
 	.then(githubUser => alert(`Показ аватара ${githubUser.name} завершён`));
 // ...
+
+//
+//
+// Промисы: обработка ошибок
+//
+//
+// Если происходит ошибка, и отсутствует её обработчик, то генерируется событие unhandledrejection, и соответствующий объект event содержит информацию об ошибке.
+
+window.addEventListener('unhandledrejection', function(event) {
+  // объект события имеет два специальных свойства:
+  alert(event.promise); // [object Promise] - промис, который сгенерировал ошибку
+  alert(event.reason); // Error: Ошибка! - объект ошибки, которая не была обработана
+});
+
+new Promise(function() {
+  throw new Error("Ошибка!");
+}); // нет обработчика ошибок
